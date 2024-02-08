@@ -3,7 +3,7 @@ import pytest
 import numpy as np
 from criticality_measures import CriticalityMeasures
 
-atol = 1e-12
+atol = 1e-14
 
 @pytest.mark.parametrize("n", [64, 128, 256])
 def test_criticality_measures(n):
