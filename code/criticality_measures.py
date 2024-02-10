@@ -5,6 +5,11 @@ import numpy as np
 class CriticalityMeasures(object):
     """Evaluates several criticality measures
 
+    Computes the criticality measures for the optimization problem
+
+    min_x g^T x + beta*norm(x,1) subject to lb <= x <= ub.
+
+
     The proximal operator is computed using a composition formula.
 
     Parameters:
