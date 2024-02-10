@@ -92,4 +92,4 @@ class CriticalityMeasures(object):
     @property
     def normal_map(self):
         """Computes the 2-norm of the normal residual."""
-        return np.linalg.norm( self._canonical_residual)
+        return np.linalg.norm( self._normal_residual)
