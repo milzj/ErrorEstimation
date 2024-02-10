@@ -8,8 +8,8 @@ atol = 1e-14
 @pytest.mark.parametrize("n", [64, 128, 256])
 def test_criticality_measures(n):
 
-    lb = -np.ones(n)
-    ub = np.ones(n)
+    lb = -np.random.rand(n)
+    ub = np.random.rand(n)
     g = np.random.randn(n)
     x = np.zeros(n)
     beta = 1e-3
