@@ -1,3 +1,7 @@
+[![GNU GPLv3 License](https://img.shields.io/github/license/milzj/FW4PDE)](https://choosealicense.com/licenses/gpl-3.0/)
+[![Test](https://github.com/milzj/FW4PDE/actions/workflows/test-FW4PDE.yml/badge.svg?style=plastic)](https://github.com/milzj/ErrorEstimation/actions/workflows/test.yml)
+[![arXiv](https://img.shields.io/badge/arXiv-2306.17032-b31b1b.svg)](https://arxiv.org/abs/2306.17032)
+
 # Supplementary code for the manuscript: Title of paper
 
 This repository contains supplementary code for the manuscript
