@@ -48,6 +48,7 @@ class CriticalityMeasures(object):
 
         """
 
+        tau = self._tau
         prox_v = self.prox(x-(1/tau)*g)
         self._canonical_residual = x - prox_v
 
@@ -66,6 +67,7 @@ class CriticalityMeasures(object):
         g(x) = g(prox(v)).
         """
 
+        tau = self._tau
         prox_v = self.prox(v)
         self._normal_residual = tau*(v-prox_v)+g
 
