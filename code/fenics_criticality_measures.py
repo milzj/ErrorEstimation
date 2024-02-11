@@ -1,4 +1,4 @@
-from .criticality_measures import CriticalityMeasures
+from criticality_measures import CriticalityMeasures
 import fenics
 
 class FEniCSCriticalityMeasures(CriticalityMeasures):
