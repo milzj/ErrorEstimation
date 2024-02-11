@@ -22,7 +22,8 @@ def test_criticality_measures(n):
     idx = g < -beta
     x[idx] = ub[idx]
 
-    cm = CriticalityMeasures(x, g, lb, ub, beta)
+    cm = CriticalityMeasures(lb, ub, beta)
+    v = x-g
 
-    assert cm.normal_map < atol
-    assert cm.canonical_map < atol
+    assert cm.normal_map(v,g) < atol
+    assert cm.canonical_map(x,g) < atol

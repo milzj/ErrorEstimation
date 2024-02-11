@@ -33,7 +33,11 @@ def test_fenics_criticality_measures(n):
     u = fenics.Function(U)
     u.vector()[:] = x
 
-    cm = FEniCSCriticalityMeasures(U, u, g, lb, ub, beta)
+    cm = FEniCSCriticalityMeasures(U, lb, ub, beta)
+    v = fenics.Function(U)
+    v.vector()[:] = x - g_vec
 
-    assert cm.normal_map < atol
-    assert cm.canonical_map < atol
+
+
+    assert cm.normal_map(v,g) < atol
+    assert cm.canonical_map(u,g) < atol

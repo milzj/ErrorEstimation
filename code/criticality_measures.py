@@ -9,7 +9,6 @@ class CriticalityMeasures(object):
 
     min_x g^T x + beta*norm(x,1) subject to lb <= x <= ub.
 
-
     The proximal operator is computed using a composition formula.
 
     Parameters:
@@ -26,67 +25,64 @@ class CriticalityMeasures(object):
             criticality measure parameter, positive
     """
 
-    def __init__(self,x,g,lb,ub,beta,tau=1.0):
+    def __init__(self,lb,ub,beta,tau=1.0):
 
-        self._x = x
-        self._g = g
         self._lb = lb
         self._ub = ub
         self._beta = beta
         self._tau = tau
 
-        self.canonical_residual
-        self.normal_residual
+    def prox(self,v):
 
-    @property
-    def canonical_residual(self):
-        """Evaluated the canonical residual
-
-        x - prox_{\psi/tau}(x-(1/tau)*g)
-
-        """
-
-        x = self._x
-        g = self._g
         lb = self._lb
         ub = self._ub
         beta = self._beta
         tau = self._tau
 
-        prox_v = prox_box_l1(x-(1/tau)*g, lb, ub, beta/tau)
+        return prox_box_l1(v, lb, ub, beta/tau)
+
+    def canonical_residual(self, x, g):
+        """Evaluated the canonical residual
+
+        x - prox_{\psi/tau}(x-(1/tau)*g(x))
+
+        """
+
+        lb = self._lb
+        ub = self._ub
+        beta = self._beta
+        tau = self._tau
+
+        prox_v = self.prox(x-(1/tau)*g)
         self._canonical_residual = x - prox_v
 
-    @property
-    def canonical_map(self):
+    def canonical_map(self, x, g):
         """Computes the 2-norm of the canonical residual."""
+        self.canonical_residual(x,g)
         return np.linalg.norm(self._canonical_residual)
 
-    @property
-    def normal_residual(self, v=None):
+    def normal_residual(self, v, g):
         """Evaluated the normal residual
 
-        tau*(v-prox(v)) + g(v).
+        tau*(v-prox(v)) + g(prox(v)).
 
         If v is not supplied, the function computes
         v according to v = x - (1/tau)*g and assumes that
         g(x) = g(prox(v)).
         """
 
-        x = self._x
-        g = self._g
         lb = self._lb
         ub = self._ub
         beta = self._beta
         tau = self._tau
 
-        if v == None:
-            v = x - (1/tau)*g
-
-        prox_v = prox_box_l1(v, lb, ub, beta/tau)
-
+        prox_v = self.prox(v)
         self._normal_residual = tau*(v-prox_v)+g
 
-    @property
-    def normal_map(self):
+    def normal_map(self, v, g):
         """Computes the 2-norm of the normal residual."""
-        return np.linalg.norm( self._normal_residual)
+        self.normal_residual(v,g)
+        return np.linalg.norm(self._normal_residual)
+
+
+
