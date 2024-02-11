@@ -36,10 +36,7 @@ class CriticalityMeasures(object):
         self._tau = tau
 
         self.canonical_residual
-        self.canonical_map
-
         self.normal_residual
-        self.normal_map
 
     @property
     def canonical_residual(self):
