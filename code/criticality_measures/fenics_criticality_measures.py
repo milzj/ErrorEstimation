@@ -1,4 +1,4 @@
-from criticality_measures import CriticalityMeasures
+from .criticality_measures import CriticalityMeasures
 import fenics
 
 class FEniCSCriticalityMeasures(CriticalityMeasures):
@@ -18,8 +18,6 @@ class FEniCSCriticalityMeasures(CriticalityMeasures):
         self.function_space = function_space
 
         super().__init__(x_vec, g_vec, lb_vec, ub_vec, beta, tau=tau)
-
-
 
     @property
     def canonical_map(self):
