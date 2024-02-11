@@ -48,11 +48,6 @@ class CriticalityMeasures(object):
 
         """
 
-        lb = self._lb
-        ub = self._ub
-        beta = self._beta
-        tau = self._tau
-
         prox_v = self.prox(x-(1/tau)*g)
         self._canonical_residual = x - prox_v
 
@@ -70,11 +65,6 @@ class CriticalityMeasures(object):
         v according to v = x - (1/tau)*g and assumes that
         g(x) = g(prox(v)).
         """
-
-        lb = self._lb
-        ub = self._ub
-        beta = self._beta
-        tau = self._tau
 
         prox_v = self.prox(v)
         self._normal_residual = tau*(v-prox_v)+g
