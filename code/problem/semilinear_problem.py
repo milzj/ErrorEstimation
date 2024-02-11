@@ -2,21 +2,21 @@ from fenics import *
 from dolfin_adjoint import *
 from fw4pde.problem import ScaledL1Norm
 from .problem import Problem
+import moola
 
 set_log_level(30)
 
 
 class SemilinearProblem(Problem):
 
-    def __init__(self, n=16, alpha=0.0, u_init=Constant(0.0)):
+    def __init__(self, n=16, alpha=0.0):
 
-        super().__init__(n=n, alpha=alpha, u_init=u_init)
+        super().__init__(n=n, alpha=alpha)
 
-    def __call__(self):
+    def __call__(self, u_init):
 
         n = self._n
         alpha = self._alpha
-        u_init = self._u_init
 
         lb = self.lb
         ub = self.ub
@@ -29,8 +29,6 @@ class SemilinearProblem(Problem):
         V = self.state_space
         bc = self.boundary_conditions
 
-        scaled_L1_norm = self.scaled_L1_norm
-
         u = Function(U)
         u.interpolate(u_init)
 
@@ -41,15 +39,19 @@ class SemilinearProblem(Problem):
         solve(F == 0, y, bc)
 
         J = assemble(0.5*inner(y-yd,y-yd)*dx + 0.5*Constant(alpha)*u**2*dx)
+        control = Control(u)
+        rf = ReducedFunctional(J, control)
+        problem_moola = MoolaOptimizationProblem(rf)
+        u_moola = moola.DolfinPrimalVector(u)
 
-        return J, u, lb, ub, scaled_L1_norm, beta, U
+        return problem_moola, u_moola
 
     def __str__(self):
         return "SemilinearProblem"
 
     @property
     def beta(self):
-        return 0.002
+        return 0.005
 
     @property
     def lb(self):
@@ -61,10 +63,10 @@ class SemilinearProblem(Problem):
 
     @property
     def yd(self):
-        return Expression("sin(4*pi*x[0])*cos(8*pi*x[1])*exp(2.0*x[0])", degree = 1)
+        return Expression("2.0*sin(4.0*pi*x[0])*cos(8.0*pi*x[1])*exp(2.0*x[0])", degree = 1)
 
     @property
     def g(self):
-        return Expression("10.0*cos(8*pi*x[0])*cos(8*pi*x[1])", degree = 1)
+        return Expression("10.0*cos(8.0*pi*x[0])*cos(8.0*pi*x[1])", degree = 1)
 
 

@@ -6,14 +6,12 @@ set_log_level(30)
 
 class Problem(object):
 
-    def __init__(self, n=16, alpha=0.0, u_init=Constant(0.0)):
-
+    def __init__(self, n=16, alpha=0.0):
 
         set_working_tape(Tape())
 
         self._n = n
         self._alpha = alpha
-        self._u_init = u_init
 
         self._mesh = UnitSquareMesh(n,n)
         mesh = self.mesh
@@ -25,7 +23,6 @@ class Problem(object):
 
     def __call__(self):
         raise NotImplementedError("Must be overwritten.")
-
 
     @property
     def boundary_conditions(self):

@@ -21,24 +21,22 @@ class Solver(object):
         return self._options
 
 
-    def __call__(self, problem):
+    def __call__(self, problem, u_init):
 
         options = self.options
 
-        problem_moola, u_moola, u, lb, ub, scaled_L1_norm, beta, U = problem()
-
-        control = Control(u)
-        rf = ReducedFunctional(J, control)
-
-        problem_moola = MoolaOptimizationProblem(rf)
-        u_moola = moola.DolfinPrimalVector(u)
+        problem_moola, u_moola = problem(u_init)
+        lb = problem.lb
+        ub = problem.ub
+        beta = problem.beta
+        U = problem.control_space
+        scaled_L1_norm = problem.scaled_L1_norm
 
         box_constraints = fw4pde.problem.BoxConstraints(U, lb, ub)
         moola_box_lmo = fw4pde.algorithms.MoolaBoxLMO(box_constraints.lb,
                                                         box_constraints.ub, beta)
 
         stepsize = fw4pde.stepsize.QuasiArmijoGoldstein(alpha=0.5, gamma=0.75)
-#        stepsize = fw4pde.stepsize.DemyanovRubinovOptimalStepSize()
 
         solver = fw4pde.algorithms.FrankWolfe(problem_moola,
                                             initial_point=u_moola,
