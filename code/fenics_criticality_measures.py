@@ -24,7 +24,7 @@ class FEniCSCriticalityMeasures(CriticalityMeasures):
         self.canonical_residual(u_vec,g_vec)
 
         v = fenics.Function(self.function_space)
-        v.vector()[:] = self._canonical_residual
+        v.vector().set_local(self._canonical_residual)
 
         return fenics.norm(v, norm_type = "L2")
 
@@ -36,6 +36,6 @@ class FEniCSCriticalityMeasures(CriticalityMeasures):
         self.normal_residual(v_vec, g_vec)
 
         w = fenics.Function(self.function_space)
-        w.vector()[:] = self._normal_residual
+        w.vector().set_local(self._normal_residual)
 
         return fenics.norm(w, norm_type = "L2")

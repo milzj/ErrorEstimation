@@ -6,14 +6,14 @@ set_log_level(30)
 
 class Problem(object):
 
-    def __init__(self, n=16, alpha=0.0):
+    def __init__(self, n=16, alpha=0.0, mpi_comm=MPI.comm_world):
 
         set_working_tape(Tape())
 
         self._n = n
         self._alpha = alpha
 
-        self._mesh = UnitSquareMesh(n,n)
+        self._mesh = UnitSquareMesh(mpi_comm,n,n)
         mesh = self.mesh
         self._control_space = FunctionSpace(mesh, "DG", 0)
         self._state_space = FunctionSpace(mesh, "CG", 1)

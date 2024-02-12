@@ -8,9 +8,9 @@ set_log_level(30)
 
 class BilinearProblem(Problem):
 
-    def __init__(self, n=16, alpha=0.0):
+    def __init__(self, n=16, alpha=0.0, mpi_comm=MPI.comm_world):
 
-        super().__init__(n=n, alpha=alpha)
+        super().__init__(n=n, alpha=alpha, mpi_comm=mpi_comm)
 
     def __call__(self, u_init):
 
@@ -57,7 +57,8 @@ class BilinearProblem(Problem):
 
     @property
     def diffusion_coefficient(self):
-        return Expression("x[1]*x[1]+0.05", degree = 2)
+        mesh = self.mesh
+        return Expression("x[1]*x[1]+0.05", degree = 2, mpi_comm=mesh.mpi_comm())
 
     @property
     def beta(self):
@@ -69,16 +70,19 @@ class BilinearProblem(Problem):
 
     @property
     def ub(self):
-        return Expression('x[0] <= 0.25 ? 0 : -5+20.0*x[0]', degree=0)
+        mesh = self.mesh
+        return Expression('x[0] <= 0.25 ? 0 : -5+20.0*x[0]', degree=0,  mpi_comm=mesh.mpi_comm())
 
     @property
     def yd(self):
-        f = Expression("sin(2.0*pi*x[0])*sin(2*pi*x[1])", degree = 0)
-        return Expression("1.0+f", f=f, degree = 1)
+        mesh = self.mesh
+        f = Expression("sin(2.0*pi*x[0])*sin(2*pi*x[1])", degree = 0,  mpi_comm=mesh.mpi_comm())
+        return Expression("1.0+f", f=f, degree = 1,  mpi_comm=mesh.mpi_comm())
 
     @property
     def g(self):
-        return Expression("10*cos(8*pi*x[0])*cos(8*pi*x[1])", degree = 1)
+        mesh = self.mesh
+        return Expression("10*cos(8*pi*x[0])*cos(8*pi*x[1])", degree = 1, mpi_comm=mesh.mpi_comm())
 
 
 

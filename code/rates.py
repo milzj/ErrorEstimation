@@ -20,7 +20,8 @@ data = SimulationData()
 N = data.N
 
 
-for Problem in [BilinearProblem, SemilinearProblem]:
+#for Problem in [BilinearProblem, SemilinearProblem]:
+for Problem in [SemilinearProblem]:
 
     name = Problem().__str__()
 
@@ -38,7 +39,7 @@ for Problem in [BilinearProblem, SemilinearProblem]:
     Nref = data.Nref
 
 
-    reference_problem = Problem(n=Nref, alpha=0.0)
+    reference_problem = Problem(n=Nref, alpha=0.0,mpi_comm=MPI.comm_world)
     lb = reference_problem.lb
     ub = reference_problem.ub
     beta = reference_problem.beta
@@ -53,7 +54,8 @@ for Problem in [BilinearProblem, SemilinearProblem]:
         # Evaluate canonical map
         problem = Problem(n=n, alpha=0.0, mpi_comm=MPI.comm_self)
         u_init = Function(problem.control_space)
-        u_init.vector().set_local(stats[n]["control_final"])
+        u_vec = stats[n]["control_final"]
+        u_init.vector().set_local(u_vec)
         problem_moola, u_moola = reference_problem(u_init)
         problem_moola.obj(u_moola)
         gradient = problem_moola.obj.derivative(u_moola).primal()
@@ -62,11 +64,13 @@ for Problem in [BilinearProblem, SemilinearProblem]:
         # Evaluate normal map
         vh = Function(problem.control_space)
         w_href = Function(reference_problem.control_space)
+        _vh = Function(reference_problem.control_space)
         v_href = Function(reference_problem.control_space)
         # Compute vh
         vh_vec = stats[n]["control_final"]-stats[n]["gradient_final"]
         vh.vector().set_local(vh_vec)
-        v_href.interpolate(vh)
+        LagrangeInterpolator.interpolate(_vh, vh)
+        v_href.interpolate(_vh)
         v_href_vec = v_href.vector().get_local()
         # Compute w = prox(v)
         w_href.vector().set_local(cm.prox(v_href_vec))

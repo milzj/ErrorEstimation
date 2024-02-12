@@ -9,9 +9,9 @@ set_log_level(30)
 
 class SemilinearProblem(Problem):
 
-    def __init__(self, n=16, alpha=0.0):
+    def __init__(self, n=16, alpha=0.0, mpi_comm=MPI.comm_world):
 
-        super().__init__(n=n, alpha=alpha)
+        super().__init__(n=n, alpha=alpha, mpi_comm=mpi_comm)
 
     def __call__(self, u_init):
 
@@ -30,7 +30,9 @@ class SemilinearProblem(Problem):
         bc = self.boundary_conditions
 
         u = Function(U)
-        u.interpolate(u_init)
+        _u_init = Function(U)
+        LagrangeInterpolator.interpolate(_u_init, u_init)
+        u.interpolate(_u_init)
 
         y = Function(V)
         v = TestFunction(V)
@@ -59,14 +61,17 @@ class SemilinearProblem(Problem):
 
     @property
     def ub(self):
-        return Expression('x[0] <= 0.25 ? 0 : -5.0+20.0*x[0]', degree=0)
+        mesh = self.mesh
+        return Expression('x[0] <= 0.25 ? 0 : -5.0+20.0*x[0]', degree=0, mpi_comm=mesh.mpi_comm())
 
     @property
     def yd(self):
-        return Expression("2.0*sin(4.0*pi*x[0])*cos(8.0*pi*x[1])*exp(2.0*x[0])", degree = 1)
+        mesh = self.mesh
+        return Expression("2.0*sin(4.0*pi*x[0])*cos(8.0*pi*x[1])*exp(2.0*x[0])", degree = 1, mpi_comm=mesh.mpi_comm())
 
     @property
     def g(self):
-        return Expression("10.0*cos(8.0*pi*x[0])*cos(8.0*pi*x[1])", degree = 1)
+        mesh = self.mesh
+        return Expression("10.0*cos(8.0*pi*x[0])*cos(8.0*pi*x[1])", degree = 1, mpi_comm=mesh.mpi_comm())
 
 
