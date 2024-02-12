@@ -20,7 +20,7 @@ data = SimulationData()
 N = data.N
 
 
-for Problem in [BilinearProblem,SemilinearProblem]:
+for Problem in [SemilinearProblem]:
 
     name = Problem().__str__()
 
@@ -37,24 +37,26 @@ for Problem in [BilinearProblem,SemilinearProblem]:
     stats = load_dict(outdir, filename)
     Nref = data.Nref
 
+
+    reference_problem = Problem(n=Nref, alpha=0.0)
+    lb = reference_problem.lb
+    ub = reference_problem.ub
+    beta = reference_problem.beta
+    U = reference_problem.control_space
+    scaled_L1_norm = reference_problem.scaled_L1_norm
+    cm = FEniCSCriticalityMeasures(U, lb, ub, beta)
+
     for n in N:
 
         print("Discretization parameter n = {}".format(n))
-        problem = Problem(n=n, alpha=0.0)
-        reference_problem = Problem(n=Nref, alpha=0.0)
-        lb = reference_problem.lb
-        ub = reference_problem.ub
-        beta = reference_problem.beta
-        U = reference_problem.control_space
-        scaled_L1_norm = reference_problem.scaled_L1_norm
 
         # Evaluate canonical map
+        problem = Problem(n=n, alpha=0.0)
         u_init = Function(problem.control_space)
         u_init.vector()[:] = stats[n]["control_final"]
         problem_moola, u_moola = reference_problem(u_init)
         problem_moola.obj(u_moola)
         gradient = problem_moola.obj.derivative(u_moola).primal()
-        cm = FEniCSCriticalityMeasures(U, lb, ub, beta)
         canonical_maps.append(cm.canonical_map(u_moola.data, gradient.data))
 
         # Evaluate normal map

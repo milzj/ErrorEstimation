@@ -36,7 +36,7 @@ class SemilinearProblem(Problem):
         v = TestFunction(V)
 
         F = (inner(grad(y), grad(v)) + y**3 * v - u*v - g*v) * dx
-        solve(F == 0, y, bc)
+        solve(F == 0, y, bc, solver_parameters = {"newton_solver":{ "linear_solver" : "mumps"}})
 
         J = assemble(0.5*inner(y-yd,y-yd)*dx + 0.5*Constant(alpha)*u**2*dx)
         control = Control(u)
