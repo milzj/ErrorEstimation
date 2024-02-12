@@ -20,7 +20,7 @@ data = SimulationData()
 N = data.N
 
 
-for Problem in [SemilinearProblem]:
+for Problem in [BilinearProblem, SemilinearProblem]:
 
     name = Problem().__str__()
 
@@ -51,9 +51,9 @@ for Problem in [SemilinearProblem]:
         print("Discretization parameter n = {}".format(n))
 
         # Evaluate canonical map
-        problem = Problem(n=n, alpha=0.0)
+        problem = Problem(n=n, alpha=0.0, mpi_comm=MPI.comm_self)
         u_init = Function(problem.control_space)
-        u_init.vector()[:] = stats[n]["control_final"]
+        u_init.vector().set_local(stats[n]["control_final"])
         problem_moola, u_moola = reference_problem(u_init)
         problem_moola.obj(u_moola)
         gradient = problem_moola.obj.derivative(u_moola).primal()
@@ -61,15 +61,15 @@ for Problem in [SemilinearProblem]:
 
         # Evaluate normal map
         vh = Function(problem.control_space)
+        w_href = Function(reference_problem.control_space)
+        v_href = Function(reference_problem.control_space)
         # Compute vh
         vh_vec = stats[n]["control_final"]-stats[n]["gradient_final"]
-        vh.vector()[:] = vh_vec
-        v_href = Function(reference_problem.control_space)
+        vh.vector().set_local(vh_vec)
         v_href.interpolate(vh)
-        v_href_vec = v_href.vector()[:]
-        w_href = Function(reference_problem.control_space)
+        v_href_vec = v_href.vector().get_local()
         # Compute w = prox(v)
-        w_href.vector()[:] = cm.prox(v_href_vec)
+        w_href.vector().set_local(cm.prox(v_href_vec))
         # Evaluate gradient at w
         problem_moola, w_moola = reference_problem(w_href)
         problem_moola.obj(w_moola)
