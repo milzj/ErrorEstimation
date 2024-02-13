@@ -18,6 +18,7 @@ from convergence_rates import convergence_rates
 
 data = SimulationData()
 N = data.N
+Nref = data.Nref
 
 
 #for Problem in [BilinearProblem, SemilinearProblem]:
@@ -27,6 +28,7 @@ for Problem in [SemilinearProblem]:
 
     print("\n\n------------------")
     print(name)
+    print("N_ref={}\n".format(Nref))
     print("------------------\n\n")
 
     outdir = "output/{}/".format(name)
@@ -36,16 +38,19 @@ for Problem in [SemilinearProblem]:
     canonical_maps = []
 
     stats = load_dict(outdir, filename)
-    Nref = data.Nref
 
 
     reference_problem = Problem(n=Nref, alpha=0.0,mpi_comm=MPI.comm_world)
-    lb = reference_problem.lb
-    ub = reference_problem.ub
+    lb_ref = reference_problem.lb
+    ub_ref = reference_problem.ub
     beta = reference_problem.beta
-    U = reference_problem.control_space
+    U_ref = reference_problem.control_space
     scaled_L1_norm = reference_problem.scaled_L1_norm
-    cm = FEniCSCriticalityMeasures(U, lb, ub, beta)
+    cm = FEniCSCriticalityMeasures(U_ref, lb_ref, ub_ref, beta)
+
+    w_href = Function(reference_problem.control_space)
+    _vh = Function(reference_problem.control_space)
+    v_href = Function(reference_problem.control_space)
 
     for n in N:
 
@@ -63,9 +68,6 @@ for Problem in [SemilinearProblem]:
 
         # Evaluate normal map
         vh = Function(problem.control_space)
-        w_href = Function(reference_problem.control_space)
-        _vh = Function(reference_problem.control_space)
-        v_href = Function(reference_problem.control_space)
         # Compute vh
         vh_vec = stats[n]["control_final"]-stats[n]["gradient_final"]
         vh.vector().set_local(vh_vec)
