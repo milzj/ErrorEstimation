@@ -27,3 +27,4 @@ def test_criticality_measures(n):
 
     assert cm.normal_map(v,g) < atol
     assert cm.canonical_map(x,g) < atol
+    assert cm.rgap(x,g) < atol

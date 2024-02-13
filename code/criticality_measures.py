@@ -76,5 +76,20 @@ class CriticalityMeasures(object):
         self.normal_residual(v,g)
         return np.linalg.norm(self._normal_residual)
 
+    def rgap(self,x,g):
+        """Evaluated the regularized gap function
 
+        (g,x-w)_H + \psi(x)-\psi(w)-(nu/2)\|x-w\|_H^2,
 
+        where w = prox_{\psi/tau}(x-(1/tau)*g) and \pis(u) = beta*\|u\|_1
+        """
+        lb = self._lb
+        ub = self._ub
+        beta = self._beta
+        tau = self._tau
+
+        prox_v = prox_box_l1(x-(1/tau)*g, lb, ub, beta/tau)
+        psi_x = np.linalg.norm(x,1)
+        psi_prox_v = np.linalg.norm(prox_v,1)
+        result = g@(x-w) + beta*psi_x - beta*psi_prox_v - tau/2*np.linalg.norm(x-w)**2
+        return result
