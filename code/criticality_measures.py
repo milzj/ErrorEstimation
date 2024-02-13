@@ -91,5 +91,5 @@ class CriticalityMeasures(object):
         prox_v = prox_box_l1(x-(1/tau)*g, lb, ub, beta/tau)
         psi_x = np.linalg.norm(x,1)
         psi_prox_v = np.linalg.norm(prox_v,1)
-        result = g@(x-w) + beta*psi_x - beta*psi_prox_v - tau/2*np.linalg.norm(x-w)**2
+        result = g@(x-prox_v) + beta*psi_x - beta*psi_prox_v - tau/2*np.linalg.norm(x-prox_v)**2
         return result
