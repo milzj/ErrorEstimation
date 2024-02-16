@@ -1,5 +1,7 @@
 from criticality_measures import CriticalityMeasures
 import fenics
+import fw4pde
+from prox import prox_box_l1
 
 class FEniCSCriticalityMeasures(CriticalityMeasures):
 
@@ -39,3 +41,45 @@ class FEniCSCriticalityMeasures(CriticalityMeasures):
         w.vector().set_local(self._normal_residual)
 
         return fenics.norm(w, norm_type = "L2")
+
+    def rgap(self, u, g, deriv):
+        """Computes regularized gap function
+
+        (g,u-w)_H + \psi(u)-\psi(w)-(nu/2)\|u-w\|_H^2,
+
+        where w = prox_{\psi/tau}(x-(1/tau)*g) and \psi(u) = beta*\|u\|_1
+
+        Parameters:
+        -----------
+            u : fenics.Function
+                control
+            g : moola.Function
+                gradient
+            deriv : moola.Function
+                derivative
+        """
+
+        lb = self._lb
+        ub = self._ub
+        beta = self._beta
+        tau = self._tau
+
+        u_minus_w = g.copy()
+        w = fenics.Function(self.function_space)
+
+        g_vec = g.data.vector().get_local()
+        u_vec = u.vector().get_local()
+
+        w_vec = prox_box_l1(u_vec-(1/tau)*g_vec, lb, ub, beta/tau)
+        w.vector().set_local(w_vec)
+        u_minus_w.data.vector().set_local(u_vec - w_vec)
+
+        psi = fw4pde.problem.ScaledL1Norm(u.function_space(),beta)
+
+        psi_u = psi(u)
+        psi_w = psi(w)
+
+        result = deriv.apply(u_minus_w)
+        result += psi_u - psi_w -.5*tau*fenics.norm(u_minus_w.data)**2
+
+        return result
