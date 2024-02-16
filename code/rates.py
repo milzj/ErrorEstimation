@@ -9,21 +9,21 @@ from matplotlib import cm
 from stats import save_dict, load_dict
 
 from problem import SemilinearProblem, BilinearProblem
-from simulation_data import SimulationData
+from experiment import Experiment
 from fenics_criticality_measures import FEniCSCriticalityMeasures
 
 from prox import prox_box_l1
 
 from convergence_rates import convergence_rates
 
-data = SimulationData()
+data = Experiment()
 N = data.N
 Nref = data.Nref
 
 #set_log_level(30)
 
 #for Problem in [BilinearProblem, SemilinearProblem]:
-for Problem in [SemilinearProblem]:
+for Problem in [BilinearProblem]:
 
     name = Problem().__str__()
 
@@ -49,9 +49,7 @@ for Problem in [SemilinearProblem]:
     scaled_L1_norm = reference_problem.scaled_L1_norm
     cm = FEniCSCriticalityMeasures(U_ref, lb_ref, ub_ref, beta)
     print("Creating an instance of the reference problem")
-    problem_moola_ref, w_moola_ref = reference_problem(Constant(1.0))
-    problem_moola_ref.obj(w_moola_ref)
-    gradient = problem_moola_ref.obj.derivative(w_moola_ref).primal()
+    problem_moola_ref, w_moola_ref = reference_problem(Constant(1.0), iterative_solver=True)
 
     w_href = Function(reference_problem.control_space)
     _vh = Function(reference_problem.control_space)

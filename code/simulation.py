@@ -10,15 +10,16 @@ from stats import save_dict
 
 from problem import SemilinearProblem, BilinearProblem
 from solver import Solver
-from simulation_data import SimulationData
+from experiment import Experiment
 
-
-data = SimulationData()
+data = Experiment()
 solver = Solver()
 N = data.N
 
+set_log_level(30)
 
-for Problem in [BilinearProblem, SemilinearProblem]:
+#for Problem in [BilinearProblem, SemilinearProblem]:
+for Problem in [SemilinearProblem]:
 
     name = Problem().__str__()
     outdir = "output/"+name+"/"

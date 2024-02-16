@@ -1,6 +1,6 @@
 import numpy as np
 
-class SimulationData(object):
+class Experiment(object):
 
     def __init__(self):
 
@@ -9,7 +9,7 @@ class SimulationData(object):
 
     @property
     def Nref(self):
-       return 4*self._N[-1]
+       return 2*self._N[-1]
 
     @property
     def Alpha(self):
