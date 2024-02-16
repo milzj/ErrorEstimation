@@ -37,11 +37,28 @@ class SemilinearProblem(Problem):
 
         F = (inner(grad(y), grad(v)) + y**3*v - u*v - g*v) * dx
 
-        solver_parameters = solver_parameters={"newton_solver":{"linear_solver":"cg",
+        solver_parameters = {"newton_solver":{"linear_solver":"cg",
                 "relative_tolerance":1e-5, "absolute_tolerance":1e-8,
                 "krylov_solver": {"relative_tolerance":1e-5, "absolute_tolerance":1e-8}}}
 
         solve(F == 0, y, bc, solver_parameters = solver_parameters)
+        #problem = NonlinearVariationalProblem(F, y, bc, J=derivative(F, y))
+        #solver = NonlinearVariationalSolver(problem)
+        #params = NonlinearVariationalSolver.default_parameters()
+
+
+        #params["newton_solver"]["absolute_tolerance"] = 1E-8
+        #params["newton_solver"]["relative_tolerance"] = 1E-7
+        #params["newton_solver"]["maximum_iterations"] = 25
+        #params["newton_solver"]["relaxation_parameter"] = 1.0
+        #params["newton_solver"]["linear_solver"] = "cg"
+        #params["newton_solver"]["preconditioner"] = "ilu"
+
+
+        #adj_args = ["cg"]
+        #solver.solve(adj_args=adj_args)
+        #solver.solve()
+
 
         J = assemble(0.5*inner(y-yd,y-yd)*dx + 0.5*Constant(alpha)*u**2*dx)
         control = Control(u)
