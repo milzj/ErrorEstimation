@@ -12,7 +12,7 @@ class BilinearProblem(Problem):
 
         super().__init__(n=n, alpha=alpha, mpi_comm=mpi_comm)
 
-    def __call__(self, u_init):
+    def __call__(self, u_init, iterative_solver=False):
 
         n = self._n
         alpha = self._alpha
@@ -41,7 +41,11 @@ class BilinearProblem(Problem):
 
         Y = Function(V)
 
-        solver = KrylovSolver(A, "cg")
+        if iterative_solver == True:
+            solver = KrylovSolver(A, "cg")
+        else:
+            solver = LUSolver(A)
+
         solver.solve(Y.vector(), b)
 
         J = assemble(0.5*inner(Y-yd,Y-yd)*dx) + assemble(0.5*Constant(alpha)*u**2*dx)

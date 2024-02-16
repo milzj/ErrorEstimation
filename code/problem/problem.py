@@ -2,13 +2,13 @@ from fenics import *
 from dolfin_adjoint import *
 from fw4pde.problem import ScaledL1Norm
 
-set_log_level(30)
+#set_log_level(30)
 
 class Problem(object):
 
     def __init__(self, n=16, alpha=0.0, mpi_comm=MPI.comm_world):
 
-        set_working_tape(Tape())
+#        set_working_tape(Tape())
 
         self._n = n
         self._alpha = alpha

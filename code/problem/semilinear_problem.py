@@ -4,8 +4,6 @@ from fw4pde.problem import ScaledL1Norm
 from .problem import Problem
 import moola
 
-#set_log_level(30)
-
 
 class SemilinearProblem(Problem):
 
@@ -13,7 +11,7 @@ class SemilinearProblem(Problem):
 
         super().__init__(n=n, alpha=alpha, mpi_comm=mpi_comm)
 
-    def __call__(self, u_init):
+    def __call__(self, u_init, iterative_solver=False):
 
         n = self._n
         alpha = self._alpha
@@ -37,27 +35,18 @@ class SemilinearProblem(Problem):
 
         F = (inner(grad(y), grad(v)) + y**3*v - u*v - g*v) * dx
 
-        solver_parameters = {"newton_solver":{"linear_solver":"cg",
+        if iterative_solver == True:
+
+            solver_parameters = {"newton_solver":{"linear_solver":"cg",
                 "relative_tolerance":1e-5, "absolute_tolerance":1e-8,
                 "krylov_solver": {"relative_tolerance":1e-5, "absolute_tolerance":1e-8}}}
+        else:
+
+            solver_parameters = {"newton_solver":{"linear_solver":"default"}}
+
+
 
         solve(F == 0, y, bc, solver_parameters = solver_parameters)
-        #problem = NonlinearVariationalProblem(F, y, bc, J=derivative(F, y))
-        #solver = NonlinearVariationalSolver(problem)
-        #params = NonlinearVariationalSolver.default_parameters()
-
-
-        #params["newton_solver"]["absolute_tolerance"] = 1E-8
-        #params["newton_solver"]["relative_tolerance"] = 1E-7
-        #params["newton_solver"]["maximum_iterations"] = 25
-        #params["newton_solver"]["relaxation_parameter"] = 1.0
-        #params["newton_solver"]["linear_solver"] = "cg"
-        #params["newton_solver"]["preconditioner"] = "ilu"
-
-
-        #adj_args = ["cg"]
-        #solver.solve(adj_args=adj_args)
-        #solver.solve()
 
 
         J = assemble(0.5*inner(y-yd,y-yd)*dx + 0.5*Constant(alpha)*u**2*dx)
@@ -73,7 +62,7 @@ class SemilinearProblem(Problem):
 
     @property
     def beta(self):
-        return 0.005
+        return 0.0055
 
     @property
     def lb(self):
