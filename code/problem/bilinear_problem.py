@@ -4,7 +4,7 @@ from fw4pde.problem import ScaledL1Norm
 from .problem import Problem
 import moola
 
-set_log_level(30)
+#set_log_level(30)
 
 class BilinearProblem(Problem):
 
@@ -40,8 +40,8 @@ class BilinearProblem(Problem):
         A, b  = assemble_system(a, L, bc)
 
         Y = Function(V)
-        solver = LUSolver(A, "petsc")
 
+        solver = KrylovSolver(A, "cg")
         solver.solve(Y.vector(), b)
 
         J = assemble(0.5*inner(Y-yd,Y-yd)*dx) + assemble(0.5*Constant(alpha)*u**2*dx)

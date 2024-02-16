@@ -4,7 +4,7 @@ from fw4pde.problem import ScaledL1Norm
 from .problem import Problem
 import moola
 
-set_log_level(30)
+#set_log_level(30)
 
 
 class SemilinearProblem(Problem):
@@ -30,15 +30,18 @@ class SemilinearProblem(Problem):
         bc = self.boundary_conditions
 
         u = Function(U)
-        _u_init = Function(U)
-        LagrangeInterpolator.interpolate(_u_init, u_init)
-        u.interpolate(_u_init)
+        u.interpolate(u_init)
 
         y = Function(V)
         v = TestFunction(V)
 
-        F = (inner(grad(y), grad(v)) + y**3 * v - u*v - g*v) * dx
-        solve(F == 0, y, bc, solver_parameters = {"newton_solver":{ "linear_solver" : "mumps"}})
+        F = (inner(grad(y), grad(v)) + y**3*v - u*v - g*v) * dx
+
+        solver_parameters = solver_parameters={"newton_solver":{"linear_solver":"cg",
+                "relative_tolerance":1e-5, "absolute_tolerance":1e-8,
+                "krylov_solver": {"relative_tolerance":1e-5, "absolute_tolerance":1e-8}}}
+
+        solve(F == 0, y, bc, solver_parameters = solver_parameters)
 
         J = assemble(0.5*inner(y-yd,y-yd)*dx + 0.5*Constant(alpha)*u**2*dx)
         control = Control(u)

@@ -20,6 +20,7 @@ data = SimulationData()
 N = data.N
 Nref = data.Nref
 
+#set_log_level(30)
 
 #for Problem in [BilinearProblem, SemilinearProblem]:
 for Problem in [SemilinearProblem]:
@@ -39,7 +40,7 @@ for Problem in [SemilinearProblem]:
 
     stats = load_dict(outdir, filename)
 
-
+    # Defining reference problem
     reference_problem = Problem(n=Nref, alpha=0.0,mpi_comm=MPI.comm_world)
     lb_ref = reference_problem.lb
     ub_ref = reference_problem.ub
@@ -47,10 +48,15 @@ for Problem in [SemilinearProblem]:
     U_ref = reference_problem.control_space
     scaled_L1_norm = reference_problem.scaled_L1_norm
     cm = FEniCSCriticalityMeasures(U_ref, lb_ref, ub_ref, beta)
+    print("Creating an instance of the reference problem")
+    problem_moola_ref, w_moola_ref = reference_problem(Constant(1.0))
+    problem_moola_ref.obj(w_moola_ref)
+    gradient = problem_moola_ref.obj.derivative(w_moola_ref).primal()
 
     w_href = Function(reference_problem.control_space)
     _vh = Function(reference_problem.control_space)
     v_href = Function(reference_problem.control_space)
+    u_init_ref = Function(reference_problem.control_space)
 
     for n in N:
 
@@ -61,27 +67,38 @@ for Problem in [SemilinearProblem]:
         u_init = Function(problem.control_space)
         u_vec = stats[n]["control_final"]
         u_init.vector().set_local(u_vec)
-        problem_moola, u_moola = reference_problem(u_init)
-        problem_moola.obj(u_moola)
-        gradient = problem_moola.obj.derivative(u_moola).primal()
-        canonical_maps.append(cm.canonical_map(u_moola.data, gradient.data))
+
+        u_init_ref.interpolate(u_init)
+
+        w_moola_ref.zero()
+        w_moola_ref.data.assign(u_init_ref)
+        w_moola_ref.bump_version()
+
+        problem_moola_ref.obj(w_moola_ref)
+        gradient = problem_moola_ref.obj.derivative(w_moola_ref).primal()
+        canonical_maps.append(cm.canonical_map(w_moola_ref.data, gradient.data))
 
         # Evaluate normal map
         vh = Function(problem.control_space)
         # Compute vh
         vh_vec = stats[n]["control_final"]-stats[n]["gradient_final"]
         vh.vector().set_local(vh_vec)
-        LagrangeInterpolator.interpolate(_vh, vh)
-        v_href.interpolate(_vh)
+#        LagrangeInterpolator.interpolate(_vh, vh)
+        v_href.interpolate(vh)
         v_href_vec = v_href.vector().get_local()
         # Compute w = prox(v)
         w_href.vector().set_local(cm.prox(v_href_vec))
-        # Evaluate gradient at w
-        problem_moola, w_moola = reference_problem(w_href)
-        problem_moola.obj(w_moola)
-        gradient = problem_moola.obj.derivative(w_moola).primal()
 
-        normal_maps.append(cm.normal_map(v_href, gradient.data))
+        # Evaluate gradient at w
+        w_moola_ref.zero()
+        w_moola_ref.data.assign(w_href)
+        w_moola_ref.bump_version()
+        problem_moola_ref.obj(w_moola_ref)
+        print("Computing gradient")
+        gradient_ref = problem_moola_ref.obj.derivative(w_moola_ref).primal()
+        print("Finished: Computing gradient")
+
+        normal_maps.append(cm.normal_map(v_href, gradient_ref.data))
 
 
     convergence_rates(canonical_maps, [1/n for n in N])
