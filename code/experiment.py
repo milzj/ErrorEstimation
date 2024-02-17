@@ -9,7 +9,7 @@ class Experiment(object):
 
     @property
     def Nref(self):
-       return 2*self._N[-1]
+       return 4*self._N[-1]
 
     @property
     def Alpha(self):

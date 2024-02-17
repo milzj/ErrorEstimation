@@ -15,11 +15,13 @@ from experiment import Experiment
 data = Experiment()
 solver = Solver()
 N = data.N
+Alpha = data.Alpha
+alpha = Alpha[0]
 
 set_log_level(30)
 
 #for Problem in [BilinearProblem, SemilinearProblem]:
-for Problem in [SemilinearProblem]:
+for Problem in [BilinearProblem]:
 
     name = Problem().__str__()
     outdir = "output/"+name+"/"
@@ -35,7 +37,7 @@ for Problem in [SemilinearProblem]:
     for n in N:
 
         print("Discretization parameter n = {}".format(n))
-        prob = Problem(n=n, alpha=0.0)
+        prob = Problem(n=n, alpha=alpha)
 
         # Solve problem
         sol = solver(prob, u_init)
@@ -54,6 +56,13 @@ for Problem in [SemilinearProblem]:
         plt.colorbar(c, fraction=0.046, pad=0.04)
         plt.tight_layout()
         plt.savefig(outdir+"{}_solution_final_n_{}.pdf".format(name,n))
+        plt.close()
+
+        # Plot gradient
+        c = plot(gradient_final,wireframe=False, cmap=cm.coolwarm)
+        plt.colorbar(c, fraction=0.046, pad=0.04)
+        plt.tight_layout()
+        plt.savefig(outdir+"{}_gradient_final_n_{}.pdf".format(name,n))
         plt.close()
 
     filename = "solutions_gradients"
