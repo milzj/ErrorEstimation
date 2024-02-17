@@ -40,6 +40,8 @@ class SemilinearProblem(Problem):
             solver_parameters = {"newton_solver":{"linear_solver":"cg",
                 "relative_tolerance":1e-5, "absolute_tolerance":1e-8,
                 "krylov_solver": {"relative_tolerance":1e-5, "absolute_tolerance":1e-8}}}
+
+            solver_parameters = {"newton_solver":{"linear_solver":"cg"}}
         else:
 
             solver_parameters = {"newton_solver":{"linear_solver":"default"}}
@@ -72,6 +74,7 @@ class SemilinearProblem(Problem):
     def ub(self):
         mesh = self.mesh
         return Expression('x[0] <= 0.25 ? 0 : -5.0+20.0*x[0]', degree=0, mpi_comm=mesh.mpi_comm())
+
 
     @property
     def yd(self):
