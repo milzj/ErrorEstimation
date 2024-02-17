@@ -107,7 +107,7 @@ for Problem in [BilinearProblem]:
         print("Finished: Computing gradient")
 
         normal_maps.append(cm.normal_map(v_href, gradient_ref.data))
-        _rgaps.append(cm.rgap(w_moola.data, gradient_ref, deriv_ref))
+        _rgaps.append(cm.rgap(w_moola_ref.data, gradient_ref, deriv_ref))
 
 
     convergence_rates(canonical_maps, [1/n for n in N])
