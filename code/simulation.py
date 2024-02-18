@@ -4,33 +4,37 @@ import numpy as np
 from fenics import *
 from dolfin_adjoint import *
 
-import matplotlib.pyplot as plt
-from matplotlib import cm
 from stats import save_dict
 
-from problem import SemilinearProblem, BilinearProblem
+from problem import SemilinearProblem, BilinearProblem, LinearProblem
 from solver import Solver
 from experiment import Experiment
 
-data = Experiment()
-solver = Solver()
-N = data.N
-Alpha = data.Alpha
-alpha = Alpha[0]
 
 set_log_level(30)
 
-#for Problem in [BilinearProblem, SemilinearProblem]:
-for Problem in [BilinearProblem]:
+solver = Solver()
+
+now = sys.argv[1]
+
+for Problem in [LinearProblem, BilinearProblem, SemilinearProblem]:
+#for Problem in [LinearProblem]:
 
     name = Problem().__str__()
-    outdir = "output/"+name+"/"
+    outdir = "output/"+now+"/"+name+"/"
     os.makedirs(outdir, exist_ok=True)
     u_init = Constant(0.0)
 
     print("\n\n------------------")
     print(name)
     print("------------------\n\n")
+
+    data = Experiment(name)
+    N = data.N
+    Nref = data.Nref
+    Alpha = data.Alpha
+    alpha = Alpha[0]
+
 
     stats = {}
 
@@ -51,20 +55,10 @@ for Problem in [BilinearProblem]:
         # Update initial value (homotopy method)
         u_init = solution_final
 
-        # Plot solution
-        c = plot(solution_final,wireframe=False, cmap=cm.coolwarm)
-        plt.colorbar(c, fraction=0.046, pad=0.04)
-        plt.tight_layout()
-        plt.savefig(outdir+"{}_solution_final_n_{}.pdf".format(name,n))
-        plt.close()
+        if "LinearProblem" in name:
+            u_init = Constant(0.0)
 
-        # Plot gradient
-        c = plot(gradient_final,wireframe=False, cmap=cm.coolwarm)
-        plt.colorbar(c, fraction=0.046, pad=0.04)
-        plt.tight_layout()
-        plt.savefig(outdir+"{}_gradient_final_n_{}.pdf".format(name,n))
-        plt.close()
 
     filename = "solutions_gradients"
-    save_dict(outdir, filename, stats)
+    save_dict(outdir, filename + "_{}".format(now), stats)
     np.savetxt(outdir  + "/" + filename  + "_filename.txt", np.array([outdir]), fmt = "%s")

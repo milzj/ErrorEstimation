@@ -18,7 +18,10 @@ from convergence_rates import convergence_rates
 
 #set_log_level(30)
 
+now = sys.argv[1]
+
 for Problem in [LinearProblem, BilinearProblem, SemilinearProblem]:
+#for Problem in [LinearProblem]:
 
     name = Problem().__str__()
 
@@ -33,8 +36,8 @@ for Problem in [LinearProblem, BilinearProblem, SemilinearProblem]:
     print("N_ref={}\n".format(Nref))
     print("------------------\n\n")
 
-    outdir = "output/{}/".format(name)
-    filename = "solutions_gradients"
+    outdir = "output/{}/{}/".format(now,name)
+    filename = "solutions_gradients_{}".format(now)
 
     normal_maps = []
     canonical_maps = []
@@ -130,7 +133,7 @@ for Problem in [LinearProblem, BilinearProblem, SemilinearProblem]:
     convergence_rates(rgaps, [1/n for n in N])
 
 
-    filename = "criticality_measures"
+    filename = "criticality_measures_nref_{}_{}".format(Nref,now)
     save_dict(outdir, filename, stats)
     np.savetxt(outdir  + "/" + filename  + "_filename.txt", np.array([outdir]), fmt = "%s")
 
