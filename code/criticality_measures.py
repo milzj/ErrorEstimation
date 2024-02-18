@@ -41,6 +41,13 @@ class CriticalityMeasures(object):
 
         return prox_box_l1(v, lb, ub, beta/tau)
 
+    def proj(self,v):
+
+        lb = self._lb
+        ub = self._ub
+
+        return prox_box_l1(v, lb, ub, 0.0)
+
     def canonical_residual(self, x, g):
         """Evaluated the canonical residual
 

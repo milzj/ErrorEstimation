@@ -88,3 +88,4 @@ def test_moola_criticality_measures(n):
     assert cm.normal_map(v,g) < atol
     assert cm.canonical_map(u,g) < atol
     assert cm.rgap(u, grad, deriv) < atol
+    assert cm.gap(u, grad, deriv) < atol

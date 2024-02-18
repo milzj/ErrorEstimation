@@ -83,3 +83,31 @@ class FEniCSCriticalityMeasures(CriticalityMeasures):
         result += psi_u - psi_w -.5*tau*fenics.norm(u_minus_w.data)**2
 
         return result
+
+
+    def gap(self, u, g, deriv):
+
+        lb = self._lb
+        ub = self._ub
+        beta = self._beta
+
+        lmo = fw4pde.algorithms.MoolaBoxLMO(lb, ub, beta)
+
+        w = g.copy()
+        lmo.solve(g, w)
+
+        u_minus_w = g.copy()
+        u_minus_w.zero()
+
+        u_minus_w.data.assign(u)
+        u_minus_w.axpy(-1.0, w)
+
+        psi = fw4pde.problem.ScaledL1Norm(u.function_space(),beta)
+
+        psi_u = psi(u)
+        psi_w = psi(w.data)
+
+        dual_gap = deriv.apply(u_minus_w)
+        dual_gap += psi_u - psi_w
+
+        return dual_gap
