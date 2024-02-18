@@ -6,14 +6,18 @@ from fw4pde.problem import ScaledL1Norm
 
 class Problem(object):
 
-    def __init__(self, n=16, alpha=0.0, mpi_comm=MPI.comm_world):
+    def __init__(self, n=16, alpha=0.0, dim=2, mpi_comm=MPI.comm_world):
 
 #        set_working_tape(Tape())
 
         self._n = n
         self._alpha = alpha
 
-        self._mesh = UnitSquareMesh(mpi_comm,n,n)
+        if dim == 2:
+            self._mesh = UnitSquareMesh(mpi_comm,n,n)
+        else:
+            self._mesh = UnitIntervalMesh(mpi_comm,n)
+
         mesh = self.mesh
         self._control_space = FunctionSpace(mesh, "DG", 0)
         self._state_space = FunctionSpace(mesh, "CG", 1)
