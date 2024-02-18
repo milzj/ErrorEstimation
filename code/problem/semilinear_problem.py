@@ -37,11 +37,8 @@ class SemilinearProblem(Problem):
 
         if iterative_solver == True:
 
-            solver_parameters = {"newton_solver":{"linear_solver":"cg",
-                "relative_tolerance":1e-5, "absolute_tolerance":1e-8,
-                "krylov_solver": {"relative_tolerance":1e-5, "absolute_tolerance":1e-8}}}
-
             solver_parameters = {"newton_solver":{"linear_solver":"cg"}}
+
         else:
 
             solver_parameters = {"newton_solver":{"linear_solver":"default"}}

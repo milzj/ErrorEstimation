@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from matplotlib import cm
 from stats import save_dict, load_dict
 
-from problem import SemilinearProblem, BilinearProblem
+from problem import SemilinearProblem, BilinearProblem, LinearProblem
 from experiment import Experiment
 from fenics_criticality_measures import FEniCSCriticalityMeasures
 
@@ -16,18 +16,17 @@ from prox import prox_box_l1
 
 from convergence_rates import convergence_rates
 
-data = Experiment()
-N = data.N
-Nref = data.Nref
-Alpha = data.Alpha
-alpha = Alpha[0]
-
 #set_log_level(30)
 
-#for Problem in [BilinearProblem, SemilinearProblem]:
-for Problem in [BilinearProblem]:
+for Problem in [LinearProblem, BilinearProblem, SemilinearProblem]:
 
     name = Problem().__str__()
+
+    data = Experiment(name)
+    N = data.N
+    Nref = data.Nref
+    Alpha = data.Alpha
+    alpha = Alpha[0]
 
     print("\n\n------------------")
     print(name)
@@ -85,7 +84,7 @@ for Problem in [BilinearProblem]:
         canonical_maps.append(cm.canonical_map(w_moola_ref.data, gradient.data))
 
         # Evaluate (regularized) gap function
-        w_href.vector().set_local(cm.prox(u_init_ref.vector().get_local()))
+        w_href.vector().set_local(cm.proj(u_init_ref.vector().get_local()))
         w_moola_ref.zero()
         w_moola_ref.data.assign(w_href)
         w_moola_ref.bump_version()
