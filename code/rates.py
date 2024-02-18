@@ -39,8 +39,8 @@ for Problem in [BilinearProblem]:
 
     normal_maps = []
     canonical_maps = []
+    gaps = []
     rgaps = []
-    _rgaps = []
 
     stats = load_dict(outdir, filename)
 
@@ -83,14 +83,25 @@ for Problem in [BilinearProblem]:
         gradient = deriv.primal()
 
         canonical_maps.append(cm.canonical_map(w_moola_ref.data, gradient.data))
-        rgaps.append(cm.rgap(w_moola_ref.data, gradient, deriv))
+
+        # Evaluate (regularized) gap function
+        w_href.vector().set_local(cm.prox(u_init_ref.vector().get_local()))
+        w_moola_ref.zero()
+        w_moola_ref.data.assign(w_href)
+        w_moola_ref.bump_version()
+
+        problem_moola_ref.obj(w_moola_ref)
+        deriv = problem_moola_ref.obj.derivative(w_moola_ref)
+        gradient = deriv.primal()
+
+        gaps.append(cm.gap(w_href, gradient, deriv))
+        rgaps.append(cm.rgap(w_href, gradient, deriv))
 
         # Evaluate normal map
         vh = Function(problem.control_space)
         # Compute vh
         vh_vec = stats[n]["control_final"]-stats[n]["gradient_final"]
         vh.vector().set_local(vh_vec)
-#        LagrangeInterpolator.interpolate(_vh, vh)
         v_href.interpolate(vh)
         v_href_vec = v_href.vector().get_local()
         # Compute w = prox(v)
@@ -100,23 +111,25 @@ for Problem in [BilinearProblem]:
         w_moola_ref.zero()
         w_moola_ref.data.assign(w_href)
         w_moola_ref.bump_version()
-        problem_moola_ref.obj(w_moola_ref)
+
         print("Computing gradient")
+        problem_moola_ref.obj(w_moola_ref)
         deriv_ref = problem_moola_ref.obj.derivative(w_moola_ref)
         gradient_ref = deriv_ref.primal()
         print("Finished: Computing gradient")
 
         normal_maps.append(cm.normal_map(v_href, gradient_ref.data))
-        _rgaps.append(cm.rgap(w_moola_ref.data, gradient_ref, deriv_ref))
 
+
+
+    stats = {"n": N, "canonical_map": canonical_maps, "normal_map": normal_maps, "gap": gaps, "rgap": rgaps}
+    print(stats)
 
     convergence_rates(canonical_maps, [1/n for n in N])
     convergence_rates(normal_maps, [1/n for n in N])
+    convergence_rates(gaps, [1/n for n in N])
     convergence_rates(rgaps, [1/n for n in N])
-    convergence_rates(_rgaps, [1/n for n in N])
 
-    stats = {"n": N, "canonical_map": canonical_maps, "normal_map": normal_maps, "rgap": rgaps, "_rgap": _rgaps}
-    print(stats)
 
     filename = "criticality_measures"
     save_dict(outdir, filename, stats)
