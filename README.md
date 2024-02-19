@@ -2,11 +2,11 @@
 [![Test](https://github.com/milzj/FW4PDE/actions/workflows/test-FW4PDE.yml/badge.svg?style=plastic)](https://github.com/milzj/ErrorEstimation/actions/workflows/test.yml)
 [![arXiv](https://img.shields.io/badge/arXiv-2306.17032-b31b1b.svg)](https://arxiv.org/abs/2306.17032)
 
-# Supplementary code for the manuscript: Title of paper
+# Supplementary code for the manuscript: Criticality Measure-based Error Estimates For Infinite Dimensional Optimization
 
 This repository contains supplementary code for the manuscript
 > A. Author, B. Author Year
-> Title of paper, Journal of ..., volume, page, url
+> Criticality Measure-based Error Estimates For Infinite Dimensional Optimization, Journal of ..., volume, page, url
 
 ## Abstract
 

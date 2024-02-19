@@ -81,7 +81,7 @@ class CriticalityMeasures(object):
 
         (g,x-w)_H + \psi(x)-\psi(w)-(nu/2)\|x-w\|_H^2,
 
-        where w = prox_{\psi/tau}(x-(1/tau)*g) and \pis(u) = beta*\|u\|_1
+        where w = prox_{\psi/tau}(x-(1/tau)*g) and \psi(u) = beta*\|u\|_1
         """
         lb = self._lb
         ub = self._ub
