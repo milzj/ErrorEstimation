@@ -1,26 +1,12 @@
 from dolfin import *
 import numpy as np
 import matplotlib.pyplot as plt
+from figure_style import *
 
 import sys
 from problem import SemilinearProblem, BilinearProblem, LinearProblem
 from experiment import Experiment
 from stats import save_dict, load_dict
-
-plt.rcParams.update({
-	"text.usetex": True,
-	"text.latex.preamble": r"\usepackage{amsfonts}",
-	"font.family": "serif",
-	"font.serif": "Computer Modern Roman",
-	"font.monospace": "Computer Modern Typewriter",
-    "figure.figsize": [5.0, 5.0]})
-
-from matplotlib.colors import LinearSegmentedColormap
-
-def cmap_blue_orange():
-	"Color map inspired by cm.coolwarm."
-	return LinearSegmentedColormap.from_list(name="cmap_BlueOrange",
-           colors =["tab:blue", "lightgrey", "tab:orange"], N=256)
 
 cmap = cmap_blue_orange()
 
