@@ -16,12 +16,12 @@ from prox import prox_box_l1
 
 from convergence_rates import convergence_rates
 
-#set_log_level(30)
+set_log_level(30)
 
 now = sys.argv[1]
 
 for Problem in [LinearProblem, BilinearProblem, SemilinearProblem]:
-#for Problem in [LinearProblem]:
+#for Problem in [SemilinearProblem]:
 
     name = Problem().__str__()
 
