@@ -5,10 +5,10 @@ from prox import prox_box_l1
 
 class FEniCSCriticalityMeasures(CriticalityMeasures):
 
-    def __init__(self,function_space,lb,ub,beta,tau=1.0):
+    def __init__(self,function_space,lb,ub,beta,tau=1.0, solver_type="default"):
 
-        _lb = fenics.project(lb, function_space)
-        _ub = fenics.project(ub, function_space)
+        _lb = fenics.project(lb, function_space, solver_type=solver_type)
+        _ub = fenics.project(ub, function_space, solver_type=solver_type)
 
         lb_vec = _lb.vector().get_local()
         ub_vec = _ub.vector().get_local()
