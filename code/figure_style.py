@@ -1,4 +1,4 @@
-# https://raw.githubusercontent.com/milzj/SAA4PDE/semilinear_complexity/stats/figure_style.py
+# Source : https://raw.githubusercontent.com/milzj/SAA4PDE/semilinear_complexity/stats/figure_style.py
 
 import matplotlib
 import matplotlib.pyplot as plt
@@ -32,6 +32,7 @@ plt.rcParams.update({
 
 from matplotlib.colors import LinearSegmentedColormap
 
+# Source : https://github.com/milzj/SAA4PDE/blob/ca8018cf0da571ad34f751911ecf2a7fbb7d7644/stats/surface_function.py#L28
 def cmap_blue_orange():
 	"Color map inspired by cm.coolwarm."
 	return LinearSegmentedColormap.from_list(name="cmap_BlueOrange",
