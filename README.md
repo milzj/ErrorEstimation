@@ -5,11 +5,11 @@
 # Supplementary code for the manuscript: Criticality Measure-based Error Estimates For Infinite Dimensional Optimization
 
 This repository contains supplementary code for the manuscript
-> A. Author, B. Author Year
+> Danlin Li, Johannes Milz 2024
 > Criticality Measure-based Error Estimates For Infinite Dimensional Optimization, Journal of ..., volume, page, url
 
 ## Abstract
-
+Motivated by optimization with differential equations, we consider optimization problems with Hilbert spaces as decision spaces. As a consequence of their infinite dimensionality, the numerical solution necessitates finite dimensional approximations and discretizations. We develop an approximation framework and demonstrate criticality measure-based error estimates. We consider criticality measures inspired by those used within optimization methods, such as semismooth Newton and (conditional) gradient methods. Furthermore, we show that our error estimates are optimal. Our findings augment existing distance-based error estimates, but do not rely on  strong convexity and second-order sufficient optimality conditions. Moreover, our error estimates can naturally be used  for code verification and validation. We illustrate our theoretical convergence rates on semilinear and bilinear PDE-constrained optimization.
 ## Installation
 
 ```
@@ -60,5 +60,5 @@ If you have any troubles please file and issue in the GitHub repository.
 
 ## Authors
 
-- A. Author
-- B. Author
+- D. Li
+- J. Milz 
