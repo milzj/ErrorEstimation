@@ -60,5 +60,6 @@ for Problem in [LinearProblem, BilinearProblem, SemilinearProblem]:
 
 
     filename = "solutions_gradients"
-    save_dict(outdir, filename + "_{}".format(now), stats)
-    np.savetxt(outdir  + "/" + filename  + "_filename.txt", np.array([outdir]), fmt = "%s")
+    _filename = name + "_" + filename + "_{}".format(now)
+    save_dict(outdir, _filename, stats)
+    np.savetxt(outdir + filename  + "_filename.txt", np.array([outdir +"/" + _filename]), fmt = "%s")

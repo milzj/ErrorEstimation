@@ -75,7 +75,7 @@ class LinearProblem(Problem):
     @property
     def yd(self):
         mesh = self.mesh
-        return Expression("x[0]*x[0]", degree = 2, mpi_comm=mesh.mpi_comm())
+        return Expression("100.0*x[0]*x[0]", degree = 2, mpi_comm=mesh.mpi_comm())
 
 
 
