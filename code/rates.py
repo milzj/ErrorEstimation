@@ -19,9 +19,16 @@ from convergence_rates import convergence_rates
 set_log_level(30)
 
 now = sys.argv[1]
+problem = sys.argv[2]
 
-for Problem in [LinearProblem, BilinearProblem, SemilinearProblem]:
-#for Problem in [SemilinearProblem]:
+if problem == "LinearProblem":
+    Problems = [LinearProblem]
+elif problem == "BilinearProblem":
+    Problems = [BilinearProblem]
+elif problem == "SemilinearProblem":
+    Problems = [SemilinearProblem]
+
+for Problem in Problems:
 
     name = Problem().__str__()
 

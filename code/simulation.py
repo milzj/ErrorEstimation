@@ -17,8 +17,17 @@ solver = Solver()
 
 now = sys.argv[1]
 
-for Problem in [LinearProblem, BilinearProblem, SemilinearProblem]:
-#for Problem in [LinearProblem]:
+problem = sys.argv[2]
+print(problem)
+
+if problem == "LinearProblem":
+    Problems = [LinearProblem]
+elif problem == "BilinearProblem":
+    Problems = [BilinearProblem]
+elif problem == "SemilinearProblem":
+    Problems = [SemilinearProblem]
+
+for Problem in Problems:
 
     name = Problem().__str__()
     outdir = "output/"+now+"/"+name+"/"

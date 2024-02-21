@@ -1,5 +1,10 @@
 
 date=$(date '+%d-%b-%Y-%H-%M-%S')
-mkdir -p output/$date
-python simulation.py $date > output/$date/simulation_terminal_output.txt
-python rates.py $date > output/$date/rates_terminal_output.txt
+declare -a Problems=("LinearProblem" "SemilinearProblem" "BilinearProblem")
+
+for P in "${Problems[@]}"
+do
+    mkdir -p output/$date/$P
+    python simulation.py $date $P > output/$date/$P/simulation_terminal_output.txt
+    python rates.py $date $P > output/$date/$P/rates_terminal_output.txt
+done
