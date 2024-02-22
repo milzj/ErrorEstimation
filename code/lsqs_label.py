@@ -22,6 +22,6 @@ def lsqs_label(constant=0.0, rate=0.0, base=10.0, precision=3):
 	rate = signif(rate, precision=precision)
 	return r"${}\cdot {}^{}$".format(constant, base, "{"+ str(rate)+"}")
 
-def lsqs_label_base(rate=2, base=2):
-	return r"(${}={}^{})$".format("n_{\mathrm{ref}}", base, "{"+ str(rate)+"}")
+def lsqs_label_base(rate=2, base=2, dim="\sqrt{2}\cdot"):
+	return r"(${}={}{}^{})$".format("h_{\mathrm{ref}}", dim, base, "{"+ str(rate)+"}")
 

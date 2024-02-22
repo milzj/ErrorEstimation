@@ -25,7 +25,11 @@ def convert_nref_base2(nref):
     return x
 
 def plot_estimate_error(xpoints,canonical_map,normal_map,gap,rgap,nref,timestamp,problem):
-    log_xpoints = np.log2(xpoints)
+
+    log_xpoints = np.log2(np.sqrt(2.0)/np.array(xpoints))
+    if problem == "LinearProblem":
+        log_xpoints = np.log2(1.0/np.array(xpoints))
+
     log_can_map = np.log2(canonical_map)
     log_nor_map = np.log2(normal_map)
     log_gap = np.log2(gap)
@@ -43,27 +47,36 @@ def plot_estimate_error(xpoints,canonical_map,normal_map,gap,rgap,nref,timestamp
     b = [b1,b2,b3,b4]
     c = np.zeros(4)
     r = np.zeros(4)
-    lsqs_base = "n"
     for i in range(4):
         c[i] = np.exp(b[i][0])
         r[i] = b[i][1]
 
+    lsqs_base = "h"
     global_color = '#000000'
-    plt.plot([], [], ' ', label=lsqs_label.lsqs_label_base(base=2, rate=convert_nref_base2(nref)))
+    if problem == "LinearProblem":
+        plt.plot([], [], ' ', label=lsqs_label.lsqs_label_base(base=2, rate=convert_nref_base2(nref), dim=""))
+    else:
+        plt.plot([], [], ' ', label=lsqs_label.lsqs_label_base(base=2, rate=convert_nref_base2(nref)))
    
     # canonical criticality measure
-    plt.plot(xpoints,canonical_map, 'o', markerfacecolor='none', markeredgecolor=global_color,markersize=12,label = r"$\chi_{\mathrm{can}}(u_h; 1)$")
+    plt.plot(xpoints,canonical_map, 'o', markerfacecolor='none', markeredgecolor=global_color,markersize=12,label = r"$\chi_{\mathrm{can}, h_{\mathrm{ref}}}(u_h^*; 1)$")
     #plt.plot(xpoints, np.exp2(log_can_fit), '--', label=lsqs_label.lsqs_label(rate=r[0], constant=c[0], base=lsqs_base), color=global_color)
    
     # normal map
-    plt.plot(xpoints, normal_map, 'd', label=r"$\chi_{\mathrm{nor}}(v_h; 1)$", color=global_color,  markeredgecolor=global_color)
+    plt.plot(xpoints, normal_map, 'd', label=r"$\chi_{\mathrm{nor},h_{\mathrm{ref}}}(v_h^*; 1)$", color=global_color,  markeredgecolor=global_color)
     plt.plot(xpoints, np.exp2(log_nor_fit), '--', label=lsqs_label.lsqs_label(rate=r[1], constant=c[1], base=lsqs_base), color=global_color)
 
     # normal gap function
-    plt.plot(xpoints, gap, '^', markerfacecolor='none', markeredgecolor=global_color,markersize=12, label=r"$\chi_{\mathrm{gap}}(u_h)$")
+    plt.plot(xpoints, gap, '^', markerfacecolor='none', markeredgecolor=global_color,markersize=12, label=r"$\chi_{\mathrm{gap},h_{\mathrm{ref}}}(u_h^*)$")
     plt.plot(xpoints, np.exp2(log_gap_fit), '-.', label=lsqs_label.lsqs_label(rate=r[2], constant=c[2], base=lsqs_base),color=global_color)
-    
-    plt.xlabel(r"${}$".format(lsqs_base))
+   
+
+    if problem == "LinearProblem":
+        plt.xlabel(r"$1/{}$".format(lsqs_base))
+    else:
+        plt.xlabel(r"${}/{}$".format("\sqrt{2}",lsqs_base))
+
+
     plt.yscale('log',base=10)
     plt.xscale('log',base=2)
     plt.legend(loc='best')
