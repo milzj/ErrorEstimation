@@ -71,4 +71,4 @@ for Problem in Problems:
     filename = "solutions_gradients"
     _filename = name + "_" + filename + "_{}".format(now)
     save_dict(outdir, _filename, stats)
-    np.savetxt(outdir + filename  + "_filename.txt", np.array([outdir +"/" + _filename]), fmt = "%s")
+    np.savetxt(outdir + filename  + "_filename.txt", np.array([outdir + _filename]), fmt = "%s")

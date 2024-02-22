@@ -143,5 +143,5 @@ for Problem in Problems:
     filename = "criticality_measures"
     _filename = name + "_" + filename + "_nref_{}_{}".format(Nref,now)
     save_dict(outdir,_filename, stats)
-    np.savetxt(outdir  + filename  + "_filename.txt", np.array([outdir + "/" + _filename ]), fmt = "%s")
+    np.savetxt(outdir  + filename  + "_filename.txt", np.array([outdir +  _filename ]), fmt = "%s")
 
