@@ -24,7 +24,7 @@ for Problem in [BilinearProblem, SemilinearProblem]:
     print("------------------\n\n")
 
     outdir = "output/{}/{}/".format(now,name)
-    filename = "solutions_gradients_{}".format(now)
+    filename = name + "_solutions_gradients_{}".format(now)
 
     stats = load_dict(outdir, filename)
 
