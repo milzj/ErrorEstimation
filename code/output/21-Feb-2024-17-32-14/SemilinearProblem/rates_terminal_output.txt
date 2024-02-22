@@ -1,0 +1,31 @@
+
+
+------------------
+SemilinearProblem
+N_ref=2048
+
+------------------
+
+
+Creating an instance of the reference problem
+Finished: Creating an instance of the reference problem
+Discretization parameter n = 32
+Computing gradient
+Finished: Computing gradient
+Discretization parameter n = 64
+Computing gradient
+Finished: Computing gradient
+Discretization parameter n = 128
+Computing gradient
+Finished: Computing gradient
+Discretization parameter n = 256
+Computing gradient
+Finished: Computing gradient
+Discretization parameter n = 512
+Computing gradient
+Finished: Computing gradient
+{'n': [32, 64, 128, 256, 512], 'canonical_map': [0.030414116719968482, 0.016461722585109577, 0.008450645126078913, 0.0043230313323431935, 0.002248341017636219], 'normal_map': [0.030219226521973307, 0.01641151148473602, 0.008438689920702881, 0.004320851158827011, 0.002248269317806747], 'gap': [0.0005182384872230521, 9.310041617302468e-05, 2.8466707403822065e-05, 8.175543823520648e-06, 2.832286787589095e-06], 'rgap': [7.073975630481237e-07, 6.698893168752179e-07, 6.458603868392046e-07, 6.065420358699077e-07, 5.170400608008433e-07]}
+Computed convergence rates: [0.8856257964517323, 0.9619819232323404, 0.9670181889965493, 0.9431824193411934]
+Computed convergence rates: [0.8807586185639525, 0.9596171681305309, 0.9657035075846416, 0.9425006701704155]
+Computed convergence rates: [2.4767566399395897, 1.7095119831763816, 1.7998890291086065, 1.5293473443271453]
+Computed convergence rates: [0.07859850448366426, 0.05270040777417123, 0.09061470323231229, 0.23033156715870026]

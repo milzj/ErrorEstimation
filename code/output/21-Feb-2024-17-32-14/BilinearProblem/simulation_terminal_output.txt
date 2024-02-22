@@ -1,0 +1,59 @@
+BilinearProblem
+
+
+------------------
+BilinearProblem
+------------------
+
+
+Discretization parameter n = 32
+Franke--Wolfe method.
+Maximum number iterations: 100
+Step size: Quasi-Armijo-Goldstein line search.
+
+iter       obj.val         dual gap        obj.val(best-lower)       ls calls   stepsize       
+0          6.232262e-01    8.740325e-05    8.740325e-05             
+1          6.231187e-01    2.721221e-06    -2.014878e-05             1          1.000000e+00   
+2          6.231154e-01    4.589453e-08    -2.338273e-05             1          1.000000e+00   
+3          6.231154e-01    3.722002e-09    -2.344200e-05             1          1.000000e+00   
+4          6.231154e-01    0.000000e+00    -2.344635e-05             1          1.000000e+00   
+Termination message: Dual gap <= tolerance.
+Discretization parameter n = 64
+Franke--Wolfe method.
+Maximum number iterations: 100
+Step size: Quasi-Armijo-Goldstein line search.
+
+iter       obj.val         dual gap        obj.val(best-lower)       ls calls   stepsize       
+0          6.242582e-01    9.524829e-06    9.524829e-06             
+1          6.242485e-01    2.623779e-08    -1.656607e-07             1          1.000000e+00   
+2          6.242485e-01    1.648376e-10    -1.973262e-07             1          1.000000e+00   
+3          6.242485e-01    2.953584e-12    -1.976059e-07             1          1.000000e+00   
+Termination message: Dual gap <= tolerance.
+Discretization parameter n = 128
+Franke--Wolfe method.
+Maximum number iterations: 100
+Step size: Quasi-Armijo-Goldstein line search.
+
+iter       obj.val         dual gap        obj.val(best-lower)       ls calls   stepsize       
+0          6.245323e-01    2.356363e-06    2.356363e-06             
+1          6.245300e-01    2.853225e-10    -4.799302e-09             1          1.000000e+00   
+2          6.245300e-01    0.000000e+00    -5.133512e-09             1          1.000000e+00   
+Termination message: Dual gap <= tolerance.
+Discretization parameter n = 256
+Franke--Wolfe method.
+Maximum number iterations: 100
+Step size: Quasi-Armijo-Goldstein line search.
+
+iter       obj.val         dual gap        obj.val(best-lower)       ls calls   stepsize       
+0          6.246007e-01    6.234169e-07    6.234169e-07             
+1          6.246001e-01    9.424226e-11    -1.441850e-09             1          1.000000e+00   
+Termination message: Dual gap <= tolerance.
+Discretization parameter n = 512
+Franke--Wolfe method.
+Maximum number iterations: 100
+Step size: Quasi-Armijo-Goldstein line search.
+
+iter       obj.val         dual gap        obj.val(best-lower)       ls calls   stepsize       
+0          6.246178e-01    1.288786e-07    1.288786e-07             
+1          6.246177e-01    4.502251e-11    -3.935641e-10             1          1.000000e+00   
+Termination message: Dual gap <= tolerance.
