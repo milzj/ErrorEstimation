@@ -79,7 +79,9 @@ def plot_estimate_error(xpoints,canonical_map,normal_map,gap,rgap,nref,timestamp
 
     plt.yscale('log',base=10)
     plt.xscale('log',base=2)
-    plt.legend(loc='best')
+    plt.legend(loc='center right')
+    if problem == "LinearProblem":
+        plt.legend(loc='best')
     
     outdir = "output/{}/{}/".format(timestamp,problem)
 
