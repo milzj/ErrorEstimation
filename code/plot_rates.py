@@ -66,8 +66,8 @@ def plot_estimate_error(xpoints,canonical_map,normal_map,gap,rgap,nref,timestamp
     plt.plot(xpoints, normal_map, 'd', label=r"$\chi_{\mathrm{nor},h_{\mathrm{ref}}}(v_h^*; 1)$", color=global_color,  markeredgecolor=global_color)
     plt.plot(xpoints, np.exp2(log_nor_fit), '--', label=lsqs_label.lsqs_label(rate=r[1], constant=c[1], base=lsqs_base), color=global_color)
 
-    # normal gap function
-    plt.plot(xpoints, gap, '^', markerfacecolor='none', markeredgecolor=global_color,markersize=12, label=r"$\chi_{\mathrm{gap},h_{\mathrm{ref}}}(u_h^*)$")
+    # gap function
+    plt.plot(xpoints, gap, '^', markerfacecolor='none', markeredgecolor=global_color,markersize=12, label=r"$\chi_{\mathrm{gap},h_{\mathrm{ref}}}(\bar u_h^*)$")
     plt.plot(xpoints, np.exp2(log_gap_fit), '-.', label=lsqs_label.lsqs_label(rate=r[2], constant=c[2], base=lsqs_base),color=global_color)
    
 
