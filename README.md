@@ -1,6 +1,6 @@
 [![GNU GPLv3 License](https://img.shields.io/github/license/milzj/FW4PDE)](https://choosealicense.com/licenses/gpl-3.0/)
 [![Test](https://github.com/milzj/FW4PDE/actions/workflows/test-FW4PDE.yml/badge.svg?style=plastic)](https://github.com/milzj/ErrorEstimation/actions/workflows/test.yml)
-[![arXiv](https://img.shields.io/badge/arXiv-2306.17032-b31b1b.svg)](http://arxiv.org/abs/2402.15948)
+[![arXiv](https://img.shields.io/badge/arXiv-2402.15948-b31b1b.svg)](http://arxiv.org/abs/2402.15948)
 
 # Supplementary code for the manuscript: Criticality Measure-based Error Estimates For Infinite Dimensional Optimization
 
@@ -51,7 +51,7 @@ the optimal controls can be visualized by running
 ```
 @software{Li2024,
   author = {Li, Danlin and Milz, Johannes},
-  doi = {2402.15948},
+  doi = {10.48550/arXiv.2402.15948},
   title = {Criticality Measure-based Error Estimates For Infinite Dimensional Optimization},
   url = {https://github.com/milzj/ErrorEstimation},
   year = {2024}
