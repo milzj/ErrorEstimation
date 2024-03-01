@@ -6,7 +6,7 @@
 
 This repository contains supplementary code for the manuscript
 > Danlin Li, Johannes Milz 2024
-> Criticality Measure-based Error Estimates For Infinite Dimensional Optimization
+> Criticality Measure-based Error Estimates For Infinite Dimensional Optimization, preprint, http://arxiv.org/abs/2402.15948
 
 ## Abstract
 
