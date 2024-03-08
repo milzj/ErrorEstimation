@@ -1,6 +1,8 @@
 [![GNU GPLv3 License](https://img.shields.io/github/license/milzj/FW4PDE)](https://choosealicense.com/licenses/gpl-3.0/)
 [![Test](https://github.com/milzj/FW4PDE/actions/workflows/test-FW4PDE.yml/badge.svg?style=plastic)](https://github.com/milzj/ErrorEstimation/actions/workflows/test.yml)
 [![arXiv](https://img.shields.io/badge/arXiv-2402.15948-b31b1b.svg)](http://arxiv.org/abs/2402.15948)
+[![DOI](https://zenodo.org/badge/751907933.svg)](https://zenodo.org/doi/10.5281/zenodo.10798891)
+
 
 # Supplementary code for the manuscript: Criticality Measure-based Error Estimates For Infinite Dimensional Optimization
 
