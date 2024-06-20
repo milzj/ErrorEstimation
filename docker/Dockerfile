@@ -21,12 +21,13 @@ ARG TF_VER=2.5.0
 ARG CONDA_VER
 ARG OS_TYPE
 
-# Install miniconda to /miniconda
-RUN curl -LO "http://repo.continuum.io/miniconda/Miniconda3-${CONDA_VER}-Linux-${OS_TYPE}.sh"
-RUN bash Miniconda3-${CONDA_VER}-Linux-${OS_TYPE}.sh -p /miniconda -b
-RUN rm Miniconda3-${CONDA_VER}-Linux-${OS_TYPE}.sh
-ENV PATH=/miniconda/bin:${PATH}
-RUN conda update -y conda
+# Install miniconda
+ENV CONDA_DIR /opt/conda
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
+    /bin/bash ~/miniconda.sh -b -p /opt/conda
+
+# Put conda in path so we can use conda activate
+ENV PATH=$CONDA_DIR/bin:$PATH
 
 ARG REPO_BRANCH="main"
 
