@@ -8,12 +8,12 @@ RUN apt-get update && \
     apt-get install -y software-properties-common && \
     add-apt-repository -y ppa:deadsnakes/ppa && \
     apt-get update && \
+    apt-get install -y build-essential && \
     apt install -y python3.8 && \
     apt install -y git wget && \
     rm -rf /var/lib/apt/lists/*
 
 # Install miniconda
-RUN mkdir -p /opt/conda 
 ENV CONDA_DIR=/opt/conda
 RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
     /bin/bash ~/miniconda.sh -b -p /opt/conda
