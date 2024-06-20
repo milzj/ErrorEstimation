@@ -51,9 +51,11 @@ the optimal controls can be visualized by running
 ## Using Docker image
 
 The Dockerfile can be used by running:
+
 ```
 docker build -t errorestimation .
 docker run -it errorestimation
+```
 
 ## Citation
 
