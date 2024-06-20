@@ -9,17 +9,8 @@ RUN apt-get update && \
     add-apt-repository -y ppa:deadsnakes/ppa && \
     apt-get update && \
     apt install -y python3.8 && \
-    apt install -y git curl && \
+    apt install -y git wget && \
     rm -rf /var/lib/apt/lists/*
-
-# Miniconda
-
-ARG CONDA_VER=latest
-ARG OS_TYPE=x86_64
-ARG PY_VER=3.8.11
-ARG TF_VER=2.5.0
-ARG CONDA_VER
-ARG OS_TYPE
 
 # Install miniconda
 ENV CONDA_DIR /opt/conda
