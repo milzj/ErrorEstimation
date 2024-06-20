@@ -48,6 +48,13 @@ the optimal controls can be visualized by running
 ./plot_control.sh
 ```
 
+## Using Docker image
+
+The Dockerfile can be used by running:
+```
+docker build -t errorestimation .
+docker run -it errorestimation
+
 ## Citation
 
 ```
