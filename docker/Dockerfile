@@ -9,7 +9,7 @@ RUN apt-get update && \
     add-apt-repository -y ppa:deadsnakes/ppa && \
     apt-get update && \
     apt install -y python3.8 && \
-    apt install -y wget git curl nano && \
+    apt install -y git curl && \
     rm -rf /var/lib/apt/lists/*
 
 # Miniconda
@@ -32,13 +32,11 @@ ARG REPO_BRANCH="main"
 
 WORKDIR /repo
 
-# Copy pyproject.toml first so that we done need to reinstall in case another file
-# is changing after rebuiding docker image
+# git clone and conda create
 RUN git clone --branch ${REPO_BRANCH} --single-branch https://github.com/milzj/ErrorEstimation
 RUN cd ErrorEstimation && conda env create -f environment.yml
 RUN cd && conda init bash && exec bash
-#RUN conda activate ErrorEstimation
-#RUN cd ErrorEstimation && pip install pytest && pytest
+
 
 
 
