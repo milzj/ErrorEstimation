@@ -28,7 +28,6 @@ WORKDIR /repo
 # git clone and conda create
 RUN git clone --branch ${REPO_BRANCH} --single-branch https://github.com/milzj/ErrorEstimation
 RUN cd ErrorEstimation && conda env create -f environment.yml
-RUN cd && conda init bash && exec bash
 
 
 
