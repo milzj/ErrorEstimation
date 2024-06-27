@@ -4,7 +4,7 @@
 [![DOI](https://zenodo.org/badge/751907933.svg)](https://zenodo.org/doi/10.5281/zenodo.10798891)
 
 
-# Supplementary code for the manuscript: Criticality Measure-based Error Estimates For Infinite Dimensional Optimization
+# Supplementary code for the manuscript: Criticality Measure-based Error Estimates for Infinite Dimensional Optimization
 
 This repository contains supplementary code for the manuscript
 > Danlin Li, Johannes Milz 2024
@@ -57,13 +57,25 @@ docker build -t errorestimation . --no-cache --network=host
 docker run -it errorestimation
 ```
 
+The prebuild docker image can be downloaded and run by executing
+
+```
+docker pull ghcr.io/milzj/errorestimation:latest
+docker run --rm -it ghcr.io/milzj/errorestimation:latest
+```
+The latter command my be replaced by
+
+```
+docker run -ti -v ${PWD}:/root/shared -w /root/shared --entrypoint=/bin/bash --rm ghcr.io/milzj/errorestimation:latest
+```
+
 ## Citation
 
 ```
 @software{Li2024,
   author = {Li, Danlin and Milz, Johannes},
   doi = {10.48550/arXiv.2402.15948},
-  title = {Criticality Measure-based Error Estimates For Infinite Dimensional Optimization},
+  title = {Supplementary code for the manuscript: Criticality Measure-based Error Estimates for Infinite Dimensional Optimization},
   url = {https://github.com/milzj/ErrorEstimation},
   year = {2024}
 }
