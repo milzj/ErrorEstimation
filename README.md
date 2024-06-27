@@ -53,7 +53,7 @@ the optimal controls can be visualized by running
 The Dockerfile can be used by running:
 
 ```
-docker build -t errorestimation .
+docker build -t errorestimation . --no-cache --network=host
 docker run -it errorestimation
 ```
 
