@@ -29,6 +29,7 @@ conda activate ErrorEstimation
 We can solve the optimization problems and evaluate criticality measures by running the shell script.
 
 ```
+cd code
 ./simulation_rates.sh
 ```
 This will create a new folder in `code/output`. Its name is a time stamp.
