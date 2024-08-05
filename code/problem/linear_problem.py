@@ -60,7 +60,7 @@ class LinearProblem(Problem):
 
     @property
     def beta(self):
-        return 0.001
+        return 2.
 
     @property
     def lb(self):
