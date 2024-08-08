@@ -1,0 +1,87 @@
+LinearProblem
+
+
+------------------
+LinearProblem
+------------------
+
+
+Discretization parameter n = 256
+Franke--Wolfe method.
+Maximum number iterations: 100
+Step size: Quasi-Armijo-Goldstein line search.
+
+iter       obj.val         dual gap        obj.val(best-lower)       ls calls   stepsize       
+0          1.000000e+03    8.010390e-01    8.010390e-01             
+1          9.992018e+02    1.081689e-05    1.081689e-05              1          1.000000e+00   
+2          9.992018e+02    0.000000e+00    0.000000e+00              1          1.000000e+00   
+Termination message: Dual gap <= tolerance.
+Discretization parameter n = 512
+Franke--Wolfe method.
+Maximum number iterations: 100
+Step size: Quasi-Armijo-Goldstein line search.
+
+iter       obj.val         dual gap        obj.val(best-lower)       ls calls   stepsize       
+0          1.000000e+03    8.010659e-01    8.010659e-01             
+1          9.992018e+02    0.000000e+00    0.000000e+00              1          1.000000e+00   
+Termination message: Dual gap <= tolerance.
+Discretization parameter n = 1024
+Franke--Wolfe method.
+Maximum number iterations: 100
+Step size: Quasi-Armijo-Goldstein line search.
+
+iter       obj.val         dual gap        obj.val(best-lower)       ls calls   stepsize       
+0          1.000000e+03    8.010723e-01    8.010723e-01             
+1          9.992018e+02    7.359468e-06    7.359468e-06              1          1.000000e+00   
+2          9.992018e+02    0.000000e+00    0.000000e+00              1          1.000000e+00   
+Termination message: Dual gap <= tolerance.
+Discretization parameter n = 2048
+Franke--Wolfe method.
+Maximum number iterations: 100
+Step size: Quasi-Armijo-Goldstein line search.
+
+iter       obj.val         dual gap        obj.val(best-lower)       ls calls   stepsize       
+0          1.000000e+03    8.010746e-01    8.010746e-01             
+1          9.992018e+02    2.671204e-06    2.671204e-06              1          1.000000e+00   
+2          9.992018e+02    0.000000e+00    0.000000e+00              1          1.000000e+00   
+Termination message: Dual gap <= tolerance.
+Discretization parameter n = 4096
+Franke--Wolfe method.
+Maximum number iterations: 100
+Step size: Quasi-Armijo-Goldstein line search.
+
+iter       obj.val         dual gap        obj.val(best-lower)       ls calls   stepsize       
+0          1.000000e+03    8.010752e-01    8.010752e-01             
+1          9.992018e+02    5.320373e-06    5.320373e-06              1          1.000000e+00   
+2          9.992018e+02    0.000000e+00    0.000000e+00              1          1.000000e+00   
+Termination message: Dual gap <= tolerance.
+Discretization parameter n = 8192
+Franke--Wolfe method.
+Maximum number iterations: 100
+Step size: Quasi-Armijo-Goldstein line search.
+
+iter       obj.val         dual gap        obj.val(best-lower)       ls calls   stepsize       
+0          1.000000e+03    8.010753e-01    8.010753e-01             
+1          9.992018e+02    3.882557e-06    3.882557e-06              1          1.000000e+00   
+2          9.992018e+02    0.000000e+00    0.000000e+00              1          1.000000e+00   
+Termination message: Dual gap <= tolerance.
+Discretization parameter n = 16384
+Franke--Wolfe method.
+Maximum number iterations: 100
+Step size: Quasi-Armijo-Goldstein line search.
+
+iter       obj.val         dual gap        obj.val(best-lower)       ls calls   stepsize       
+0          1.000000e+03    8.010754e-01    8.010754e-01             
+1          9.992018e+02    4.075551e-06    4.075551e-06              1          1.000000e+00   
+2          9.992018e+02    0.000000e+00    0.000000e+00              1          1.000000e+00   
+Termination message: Dual gap <= tolerance.
+Discretization parameter n = 32768
+Franke--Wolfe method.
+Maximum number iterations: 100
+Step size: Quasi-Armijo-Goldstein line search.
+
+iter       obj.val         dual gap        obj.val(best-lower)       ls calls   stepsize       
+0          1.000000e+03    8.010754e-01    8.010754e-01             
+1          9.992018e+02    4.079075e-06    4.079075e-06              1          1.000000e+00   
+2          9.992018e+02    0.000000e+00    0.000000e+00              1          1.000000e+00   
+Termination message: Dual gap <= tolerance.
