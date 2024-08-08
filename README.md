@@ -16,7 +16,7 @@ Motivated by optimization with differential equations, we consider optimization 
 
 
 ## Reproducing the numerical simulations
-All the scripts are located in the folder called `code` in the repository. Is is assumed that you run the script from within this folder.
+All the scripts are located in the folder called [`code`](./code) in the repository. Is is assumed that you run the script from within this folder.
 
 ### Installation
 

@@ -60,7 +60,8 @@ def plot_estimate_error(xpoints,canonical_map,normal_map,gap,rgap,nref,timestamp
    
     # canonical criticality measure
     plt.plot(xpoints,canonical_map, 'o', markerfacecolor='none', markeredgecolor=global_color,markersize=12,label = r"$\chi_{\mathrm{can}, h_{\mathrm{ref}}}(u_h^*; 1)$")
-    #plt.plot(xpoints, np.exp2(log_can_fit), '--', label=lsqs_label.lsqs_label(rate=r[0], constant=c[0], base=lsqs_base), color=global_color)
+    if problem == "LinearProblem":
+        plt.plot(xpoints, np.exp2(log_can_fit), '-', label=lsqs_label.lsqs_label(rate=r[0], constant=c[0], base=lsqs_base), color=global_color)
    
     # normal map
     plt.plot(xpoints, normal_map, 'd', label=r"$\chi_{\mathrm{nor},h_{\mathrm{ref}}}(v_h^*; 1)$", color=global_color,  markeredgecolor=global_color)

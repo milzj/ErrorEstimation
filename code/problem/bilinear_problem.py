@@ -34,7 +34,7 @@ class BilinearProblem(Problem):
         y = TrialFunction(V)
         v = TestFunction(V)
 
-        a = (inner(grad(y), grad(v)) - y*u * v) * dx
+        a = (inner(grad(y), grad(v)) + y*u * v) * dx
         L = g*v*dx
 
         A, b  = assemble_system(a, L, bc)

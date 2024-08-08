@@ -1,1 +1,0 @@
-output/21-Feb-2024-17-32-14/SemilinearProblem//SemilinearProblem_solutions_gradients_21-Feb-2024-17-32-14
