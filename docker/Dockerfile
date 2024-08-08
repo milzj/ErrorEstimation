@@ -5,11 +5,6 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 # git and wget
 RUN apt-get update && \
-    apt-get install -y software-properties-common && \
-    add-apt-repository -y ppa:deadsnakes/ppa && \
-    apt-get update && \
-    apt-get install -y build-essential && \
-    apt install -y python3.8 && \
     apt install -y git wget && \
     apt install -y git wget && \
     rm -rf /var/lib/apt/lists/*
