@@ -84,6 +84,9 @@ docker run -ti -v ${PWD}:/root/shared -w /root/shared --entrypoint=/bin/bash --r
 ## Having issues
 If you have any troubles please file an issue in the GitHub repository.
 
+## Acknowledgement
+We extend our gratitude to the developers of the resources available at [Scientific Computing Example Paper](https://github.com/scientificcomputing/example-paper).
+
 ## Authors
 
 - Danlin Li
