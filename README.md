@@ -82,7 +82,7 @@ docker run -ti -v ${PWD}:/root/shared -w /root/shared --entrypoint=/bin/bash --r
 ```
 
 ## Having issues
-If you have any troubles please file and issue in the GitHub repository.
+If you have any troubles please file an issue in the GitHub repository.
 
 ## Authors
 
